@@ -8,12 +8,12 @@
 
 start_link(Opts) when is_list(Opts) -> gen_server:start_link({local, ?MODULE}, ?MODULE, Opts, []).
 
-increment(Key, Magnitude, SampleRate) -> gen_server:cast(?MODULE, {sample, {increment, Key, Magnitude, SampleRate}}).
-decrement(Key, Magnitude, SampleRate) -> gen_server:cast(?MODULE, {sample, {decrement, Key, Magnitude, SampleRate}}).
-timing(Key, Value, SampleRate)        -> gen_server:cast(?MODULE, {sample, {timing, Key, Value, SampleRate}}).
-histogram(Key, Value, SampleRate)     -> gen_server:cast(?MODULE, {sample, {histogram, Key, Value, SampleRate}}).
-meter(Key, Value, SampleRate)         -> gen_server:cast(?MODULE, {sample, {meter, Key, Value, SampleRate}}).
-gauge(Key, Value, SampleRate)         -> gen_server:cast(?MODULE, {sample, {gauge, Key, Value, SampleRate}}).
+increment(K,V,R) -> gen_server:cast(?MODULE, {sample, {increment,K,V,R}}).
+decrement(K,V,R) -> gen_server:cast(?MODULE, {sample, {decrement,K,V,R}}).
+timing(K,V,R)    -> gen_server:cast(?MODULE, {sample, {timing,K,V,R}}).
+histogram(K,V,R) -> gen_server:cast(?MODULE, {sample, {histogram,K,V,R}}).
+meter(K,V,R)     -> gen_server:cast(?MODULE, {sample, {meter,K,V,R}}).
+gauge(K,V,R)     -> gen_server:cast(?MODULE, {sample, {gauge,K,V,R}}).
 
 init([Host, Port]) ->
     process_flag(trap_exit, true),
