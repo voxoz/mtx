@@ -26,15 +26,16 @@ handle_cast({sample, {Operation, Key, Value, SampleRate}}, State) ->
         true -> handle_cast({Operation, Key, Value, SampleRate}, State);
         false -> {noreply, State} end;
 
-handle_cast({increment, Key, Magnitude, SampleRate}, State) -> send(io_lib:format("~s:~B|c|@~f", [Key, Magnitude, SampleRate]),State);
-handle_cast({decrement, Key, Magnitude, SampleRate}, State) -> send(io_lib:format("~s:-~B|c|@~f", [Key, Magnitude, SampleRate]), State);
-handle_cast({timing, Key, Value, SampleRate}, State)        -> send(io_lib:format("~s:~B|ms|@~f", [Key, Value, SampleRate]), State);
-handle_cast({histogram, Key, Value, SampleRate}, State)     -> send(io_lib:format("~s:~B|h|@~f", [Key, Value, SampleRate]), State);
-handle_cast({meter, Key, Value, SampleRate}, State)         -> send(io_lib:format("~s:~B|m|@~f", [Key, Value, SampleRate]), State);
-handle_cast({gauge, Key, Value, SampleRate}, State)         -> send(io_lib:format("~s:~B|g|@~f", [Key, Value, SampleRate]), State).
+handle_cast({increment, K, V, R}, State) -> send("~s:~B|c|@~f", [K, V, R], State);
+handle_cast({decrement, K, V, R}, State) -> send("~s:-~B|c|@~f",[K, V, R], State);
+handle_cast({timing,    K, V, R}, State) -> send("~s:~B|ms|@~f",[K, V, R], State);
+handle_cast({histogram, K, V, R}, State) -> send("~s:~B|h|@~f", [K, V, R], State);
+handle_cast({meter,     K, V, R}, State) -> send("~s:~B|m|@~f", [K, V, R], State);
+handle_cast({gauge,     K, V, R}, State) -> send("~s:~B|g|@~f", [K, V, R], State).
 
 handle_info(_Info, State) -> {noreply, State}.
 terminate(_Reason, _State) -> ok.
 code_change(_OldVsn, State, _Extra) -> {ok, State}.
 
-send(Stats,#state{socket=Socket,host=Host,port=Port}) -> gen_udp:send(Socket,Host,Port,Stats).
+send(Stats,Params,#state{socket=Socket,host=Host,port=Port}) ->
+    gen_udp:send(Socket,Host,Port,io_lib:format(Stats,Params)).
