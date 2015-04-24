@@ -38,4 +38,4 @@ terminate(_Reason, _State) -> ok.
 code_change(_OldVsn, State, _Extra) -> {ok, State}.
 
 send(Stats,#state{socket=Socket,host=Host,port=Port}=State) ->
-    gen_udp:send(Socket,Host,Port,lists:concat(Stats)), {noreply,State}.
+    ok = gen_udp:send(Socket,Host,Port,lists:concat(Stats)), {noreply,State}.
