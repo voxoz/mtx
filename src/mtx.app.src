@@ -1,0 +1,11 @@
+{application, mtx, [
+  {description, "METRICS VXZ API"},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [kernel, stdlib]},
+  {mod, {mtx_app, []}},
+  {modules, []},
+  {env, [
+    {ip, "localhost"},
+    {port, 8125}]}
+]}.
