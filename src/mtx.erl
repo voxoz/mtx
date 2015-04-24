@@ -11,6 +11,8 @@ start_link(Opts) when is_list(Opts) -> gen_server:start_link({local, ?MODULE}, ?
 increment(Key, Magnitude, SampleRate) -> gen_server:cast(?MODULE, {sample, {increment, Key, Magnitude, SampleRate}}).
 decrement(Key, Magnitude, SampleRate) -> gen_server:cast(?MODULE, {sample, {decrement, Key, Magnitude, SampleRate}}).
 timing(Key, Value, SampleRate)        -> gen_server:cast(?MODULE, {sample, {timing, Key, Value, SampleRate}}).
+histogram(Key, Value, SampleRate)     -> gen_server:cast(?MODULE, {sample, {histogram, Key, Value, SampleRate}}).
+meter(Key, Value, SampleRate)         -> gen_server:cast(?MODULE, {sample, {meter, Key, Value, SampleRate}}).
 gauge(Key, Value, SampleRate)         -> gen_server:cast(?MODULE, {sample, {gauge, Key, Value, SampleRate}}).
 
 init([Host, Port]) ->
