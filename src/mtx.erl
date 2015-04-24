@@ -29,8 +29,8 @@ handle_cast({sample, {Operation, Key, Value, SampleRate}}, State) ->
 handle_cast({increment, Key, Magnitude, SampleRate}, State) -> send(io_lib:format("~s:~B|c|@~f", [Key, Magnitude, SampleRate]),State);
 handle_cast({decrement, Key, Magnitude, SampleRate}, State) -> send(io_lib:format("~s:-~B|c|@~f", [Key, Magnitude, SampleRate]), State);
 handle_cast({timing, Key, Value, SampleRate}, State)        -> send(io_lib:format("~s:~B|ms|@~f", [Key, Value, SampleRate]), State);
-handle_cast({histogram, Key, Value, SampleRate}, State)     -> send(io_lib:format("~s:~B|h|@~f", [Key, Value, SampleRate]), State).
-handle_cast({meter, Key, Value, SampleRate}, State)         -> send(io_lib:format("~s:~B|m|@~f", [Key, Value, SampleRate]), State).
+handle_cast({histogram, Key, Value, SampleRate}, State)     -> send(io_lib:format("~s:~B|h|@~f", [Key, Value, SampleRate]), State);
+handle_cast({meter, Key, Value, SampleRate}, State)         -> send(io_lib:format("~s:~B|m|@~f", [Key, Value, SampleRate]), State);
 handle_cast({gauge, Key, Value, SampleRate}, State)         -> send(io_lib:format("~s:~B|g|@~f", [Key, Value, SampleRate]), State).
 
 handle_info(_Info, State) -> {noreply, State}.
